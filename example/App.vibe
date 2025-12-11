@@ -1,50 +1,70 @@
-component Header:
-    "A dark blue header with white text, containing a logo on the left and navigation menu on the right. Use a subtle gradient background."
+component Logo:
+    "A sleek, modern logo with the text 'VibeScript' in gradient colors from blue to purple, clickable and links to Home.html"
 
-component Sidebar:
-    "A left sidebar with a dark theme, containing navigation links and a user profile section at the bottom. Include icons for each menu item."
+component NavItem:
+    "A clickable navigation link with hover effects, smooth transitions, and proper anchor tags"
 
-component MainContent:
-    "The main content area with a light background, containing a welcome message and a grid of content cards. Use proper spacing and typography."
+component Navbar:
+    "A responsive navigation bar with dark background, logo on left, and navigation links to: Home (href='Home.html'), Docs (href='Docs.html'). Include a hamburger menu for mobile."
+    Logo
+    NavItem
+    NavItem
 
-component ContentCard:
-    "A card component with a white background, subtle shadow, rounded corners, and hover effects. Include an icon, title, and description text."
+component HeroSection:
+    "A stunning hero section with gradient background from pink to purple, featuring 'Code is dead. Vibes are forever.' tagline, '🌊 VibeScript' title, and compelling description of AI-powered, component-based full-stack programming language"
 
-component ChartWidget:
-    "A data visualization widget showing a bar chart with sample data. Use a clean design with proper colors and labels."
+component FeatureCard:
+    "An attractive feature card with icon, title, and description highlighting VibeScript capabilities"
 
-component StatusIndicator:
-    "A circular status indicator that shows different colors (green for success, yellow for warning, red for error). Include an icon and status text."
+component FeaturesSection:
+    "A comprehensive features showcase section with cards for: AI-Driven Compilation, Component-Based Architecture, Recursive Nesting, Hot Reload, Build Overlay, One-Command Deploy, Prompt Caching, Zero Learning Curve, Model Selection, Config File Support"
 
-component ActionButton:
-    "A primary action button with a blue gradient background, white text, and hover effects. Include an icon and button text."
+component CodeExample:
+    "A code example display component with syntax highlighting, showing VibeScript syntax and usage"
+
+component InstallationSection:
+    "An installation guide section with npm install commands, API key setup instructions, and clear step-by-step directions"
+
+component UsageSection:
+    "A usage section demonstrating basic syntax, component creation, and page building with code examples"
+
+component NestedComponentsSection:
+    "A section explaining recursive nesting with code examples showing parent-child component relationships"
+
+component ModelSelectionSection:
+    "A model selection guide section showing different OpenAI models (gpt-5.1, gpt-5-mini, gpt-5-nano, gpt-oss-120b, gpt-oss-20b) with their capabilities and use cases"
+
+component ConfigurationSection:
+    "A configuration section explaining vibe.config.json setup and command-line options"
+
+component HowItWorksSection:
+    "A technical section explaining the compilation pipeline: prompt parsing, hashing & caching, AI compilation, recursive resolution, assembly, live reload, and deployment"
+
+component SupabaseSection:
+    "A section about Supabase integration (marked as BETA) with code examples showing data source declaration and CRUD operations"
+
+component LintingSection:
+    "A section about the linter with examples of what it checks: generic descriptions, missing emojis, unused components, missing pages"
 
 component Footer:
-    "A footer with a dark theme, containing copyright information, social media links, and a newsletter signup form."
+    "A comprehensive footer with links to GitHub, documentation, social media, and copyright information for VibeScript"
 
-component Modal:
-    "A modal dialog component with a semi-transparent backdrop, white background, rounded corners, and close button. Include header, body, and footer sections."
+component DocsSidebar:
+    "A documentation sidebar with navigation links to different sections: Installation, Usage, Nested Components, Model Selection, Configuration, How It Works, Supabase, Linting"
 
-component Notification:
-    "A notification toast component that appears at the top-right corner. Include different types (success, error, warning) with appropriate colors and icons."
+component DocsContent:
+    "A documentation content area with sections for installation, usage examples, nested components, model selection, configuration, how it works, supabase integration, and linting"
 
-page Dashboard:
-    Header
-    Sidebar
-    MainContent
-    "A section with three ContentCard components arranged horizontally, each showing different types of information."
-    ChartWidget
-    "A status overview section with multiple StatusIndicator components in a grid layout."
+page Home:
+    Navbar
+    HeroSection
+    FeaturesSection
+    InstallationSection
+    UsageSection
     Footer
 
-page Settings:
-    Header
-    Sidebar
-    "A settings page with form controls, toggles, and configuration options. Use a clean, organized layout with proper grouping."
-    ActionButton
-    Footer
-
-page Profile:
-    Header
-    "A user profile page with avatar, personal information, preferences, and account settings. Include form fields and save buttons."
+page Docs:
+    Navbar
+    DocsSidebar
+    DocsContent
     Footer

@@ -7,19 +7,21 @@ VibeScript is the **world’s first prompt-driven, component-based, full-stack, 
 You don’t write code. You write *vibes*.  
 VibeScript compiles your vibes into production-ready HTML/CSS/JS using an LLM, caches the results, and serves them like a normal website.  
 
-It’s like React, but instead of JSX, you just say:
+It's like React, but instead of JSX, you just say:
 
 ```
 component Navbar:
     "A minimalistic navbar with a logo on the left and a glowing 'Sign Up' button on the right."
 ```
 
+(You can use either `component` or `thing` - whatever feels more natural to you.)
+
 ---
 
 ## ✨ Features
 
 - **🧠 AI-Driven Compilation** – Your code is literally just English prompts. The AI does the rest.
-- **📦 Component-Based** – Break your vibes into reusable components.
+- **📦 Component-Based** – Break your vibes into reusable components (use `component` or `thing` - whatever you prefer).
 - **🔄 Recursive Nesting** – Components can contain other components, infinitely deep.
 - **⚡ Hot Reload** – Save your `.vibe` file, and your browser updates instantly.
 - **🎭 Build Overlay** – Shows a “✨ Building vibes…” overlay while the AI thinks.
@@ -52,10 +54,17 @@ sudo npm install -g vibescript
 ```
 
 
-You’ll also need an **OpenAI API key**:
+You’ll also need an **OpenAI API key**. You can set it in two ways:
 
+**Option 1: Environment Variable**
 ```bash
 export OPENAI_API_KEY="your_api_key_here"
+```
+
+**Option 2: .env File** (Recommended)
+Create a `.env` file in your project root:
+```bash
+echo "OPENAI_API_KEY=your_api_key_here" > .env
 ```
 
 ---
@@ -76,7 +85,7 @@ component Navbar:
 component HeroSection:
     "Big bold headline saying 'Welcome to the Vibe'. Background is a gradient from pink to purple. Add a call-to-action button."
 
-page HomePage:
+page App:
     Navbar
     HeroSection
 ```
@@ -141,12 +150,14 @@ component Icon:
     "A small SVG star icon."
 
 component NavButton:
-    "A glowing button that says 'Sign Up' with the Icon inside."
+    "A glowing button that says 'Sign Up'"
+    Icon
 
 component Navbar:
-    "A minimalistic navbar with a logo on the left and the NavButton on the right."
+    "A minimalistic navbar with a logo on the left and NavButton on the right."
+    NavButton
 
-page HomePage:
+page App:
     Navbar
 ```
 
@@ -154,8 +165,10 @@ The compiler will:
 - Generate `Icon`
 - Inject it into `NavButton`
 - Inject `NavButton` into `Navbar`
-- Inject `Navbar` into your page
+- Inject `Navbar` into your page (which becomes `index.html` if named `App`)
 - Ship it
+
+(You can mix `component` and `thing` keywords freely - the compiler understands both!)
 
 ---
 
@@ -164,29 +177,25 @@ The compiler will:
 VibeScript lets you choose which OpenAI LLM to use for generating your vibes. 
 
 ### Available Models:
-- `gpt-5` – Latest and most capable model for complex generation and the best UI. **Best quality, highest cost.**
-- `gpt-4o` – High-quality, multimodal model. **Good quality, high cost.**
-- `gpt-4.1` – Advanced reasoning and analysis capabilities. **Very good quality, moderate-high cost.**
-- `gpt-4.1-mini` – Faster, more cost-effective version of GPT-4.1. **Good quality, moderate cost.**
-- `gpt-4.1-nano` – Even faster, more cost-effective version of GPT-4.1-mini. **Basic quality, low cost.**
-- `o3` – OpenAI's reasoning-focused model. **Good quality, moderate cost.**
-- `o4-mini` – Smaller, faster reasoning model. **Basic quality, low cost.**
+- `gpt-5.1` – Latest and most capable model for complex generation and the best UI. **Best quality, highest cost.**
+- `gpt-5-mini` – Faster, more cost-effective version of GPT-5.1. **Good quality, moderate cost.**
+- `gpt-5-nano` – Even faster, most cost-effective version. **Basic quality, low cost.**
 - `gpt-oss-120b` – Open source model with 120B parameters. **Variable quality, very low cost.**
 - `gpt-oss-20b` – Open source model with 20B parameters. **Basic quality, very low cost.**
 
 ### Model Selection Guide:
-- **Production/Professional Sites**: Use `gpt-5`, `gpt-4o`, or `gpt-4.1`
-- **Personal Projects/Prototypes**: Use `gpt-4.1-mini` or `gpt-4.1-nano`
-- **Budget-Conscious Development**: Use `o3` or `o4-mini`
+- **Production/Professional Sites**: Use `gpt-5.1`
+- **Personal Projects/Prototypes**: Use `gpt-5-mini` or `gpt-5-nano`
+- **Budget-Conscious Development**: Use `gpt-5-nano`
 - **Experimental/Open Source**: Use `gpt-oss-120b` or `gpt-oss-20b`
 
 ### Example:
 ```bash
-vibe App.vibe --model gpt-5
+vibe App.vibe --model gpt-5.1
 ```
 
 This will:
-- Use `gpt-5` for all component generation
+- Use `gpt-5.1` for all component generation
 - Produce higher quality, more polished websites
 - Cache results separately per model (so switching models won't overwrite previous cache)
 - Allow you to experiment with speed vs. quality trade-offs
@@ -202,18 +211,18 @@ VibeScript can be configured via:
 ### Example `vibe.config.json`
 ```json
 {
-  "model": "gpt-5",
+  "model": "gpt-5.1",
   "port": 4000
 }
 ```
 
-- `model` – Default OpenAI model to use for component generation. **Recommended: gpt-5 for best results.**
+- `model` – Default OpenAI model to use for component generation. **Recommended: gpt-5.1 for best results.**
 - `port` – Port for the dev server in `--watch` mode.
 
 ### Priority:
 1. Command-line flags (highest priority)
 2. `vibe.config.json`
-3. Built-in defaults (`gpt-4.1-mini` for model, `3000` for port)
+3. Built-in defaults (`gpt-5-nano` for model, `3000` for port)
 
 ### Example Usage:
 ```bash
@@ -221,23 +230,57 @@ VibeScript can be configured via:
 vibe example/App.vibe --watch
 
 # Overrides config file with higher quality model
-vibe example/App.vibe --model gpt-4o --port 5000
+vibe example/App.vibe --model gpt-5.1 --port 5000
 
 # Quick test with budget model
-vibe example/App.vibe --model gpt-4.1-nano
+vibe example/App.vibe --model gpt-5-nano
 ```
 
 ---
 
 ## ⚙️ How It Works
 
-1. **Prompt Parsing** – VibeScript reads your `.vibe` file and extracts components and pages.
-2. **Hashing & Caching** – Each prompt is hashed. If unchanged, it’s pulled from `.vibecache.json`.
+1. **Prompt Parsing** – VibeScript reads your `.vibe` file and extracts components, pages, and data sources.
+2. **Hashing & Caching** – Each prompt is hashed. If unchanged, it's pulled from `.vibecache.json`.
 3. **AI Compilation** – Prompts are sent to an LLM (e.g., GPT-4o-mini) to generate HTML/CSS/JS.
-4. **Recursive Resolution** – If a component references another, it’s resolved first.
+4. **Recursive Resolution** – If a component references another, it's resolved first based on explicit nesting.
 5. **Assembly** – Components are stitched together into full HTML pages.
 6. **Live Reload** – A WebSocket server pushes reload events to your browser.
 7. **Deployment** – `--deploy` sends your vibes to Vercel.
+
+## 🔥 Data Sources (Supabase) **BETA**
+
+VibeScript supports Supabase! Just declare a source:
+
+```vibescript
+source Supabase myDb:
+    "Use Supabase with env.SUPABASE_URL and env.SUPABASE_ANON_KEY. Table: users"
+
+component UserList:
+    "Show a list of users from source myDb table 'users'"
+```
+
+The AI will automatically generate the connection code and CRUD operations. The generated code uses:
+- `SUPABASE_URL` - Your Supabase project URL (e.g., `https://xyzcompany.supabase.co`)
+- `SUPABASE_ANON_KEY` - Your anon/publishable key (for frontend code)
+- `SUPABASE_SERVICE_ROLE_KEY` - Your service_role key (for backend/admin code, use "admin" or "backend" in the source description)
+
+Real vibe coders use databases for everything! 🔥
+
+## 🔍 Linting Your Vibes
+
+Check your vibes for violations:
+
+```bash
+vibe lint App.vibe
+```
+
+The linter checks for:
+- Short or generic descriptions
+- Missing emojis (real vibe coders use emojis!)
+- Unused components
+- Missing pages
+- Unused data sources
 
 ---
 
