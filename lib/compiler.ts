@@ -407,6 +407,13 @@ export async function compileVibeScript(file: any, config: any = {}): Promise<an
   // Read the source file as UTF-8 text
   const src = fs.readFileSync(file, "utf8"); // This reads the source file
 
+  // Check if someone tried to inline their API key (security vulnerability but also just dumb)
+  const apiKeyPattern: any = /apiKey\s*[:=]\s*["']?sk-/i; // This checks for inline API keys
+  if (apiKeyPattern.test(src)) { // This checks if an API key was found inline
+    // Throw an error with a funny message telling them not to do this
+    throw new Error("You're vibing a bit too hard. Don't actually put your API key inline in your .vibe file. That's a security vulnerability and also just really dumb. Use a .env file like a normal person."); // This throws the error
+  } // This ends the API key check
+
   // Parse things (supporting both "thing" and "component" keywords)
   // This regex matches: thing/component Name: followed by a quoted string or multi-line body
   const thingRegex: any = /(?:thing|component)\s+(\w+):\s*([\s\S]*?)(?=(?:thing|component|page|source)\s+\w+:|$)/g; // This is the regex for parsing things
