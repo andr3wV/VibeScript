@@ -47,23 +47,27 @@ component Navbar:
 npm install -g vibescript
 ```
 
-**Note:** If you get an access error, try using `sudo`:
+**Note:** If you get any errors, `sudo` usually fixes everything:
 ```bash
 sudo npm install -g vibescript
 ```
 
 
-You'll also need an **OpenAI API key**. You can set it in two ways:
+You'll also need an [**OpenAI API key**](https://platform.openai.com/api-keys). You can set it in two ways:
 
-**Option 1: Environment Variable**
-```bash
-export OPENAI_API_KEY="your_api_key_here"
-```
-
-**Option 2: .env File** (Recommended)
+**Option 1: .env File** (Recommended)
 Create a `.env` file in your project root:
 ```bash
 echo "OPENAI_API_KEY=your_api_key_here" > .env
+```
+
+**Option 2: Inline in `.vibe` file**
+Just put it directly in your `.vibe` file at the top. This leaks your keys but fuck it, you don't care:
+```vibescript
+apiKey: "sk-your-actual-api-key-here"
+
+thing NavButton:
+    "A glowing button that says 'Sign Up' in upper case letters."
 ```
 
 <a id="usage"></a>
@@ -151,14 +155,14 @@ You'll instantly have a working website with a url!
 <a id="model-selection"></a>
 ### 🧠 **Model Selection**
 
-VibeScript lets you choose which OpenAI LLM to use for generating your vibes. Because sometimes you need GPT-5.1, and sometimes you just need a vibe.
+VibeScript lets you choose which in-house, proprietary LLM to use for generating your vibes. 
 
 #### Available Models:
-- `gpt-5.1` – Latest and most capable model for complex generation and the best UI. **Best quality, highest cost.**
-- `gpt-5-mini` – Faster, more cost-effective version of GPT-5.1. **Good quality, moderate cost.**
-- `gpt-5-nano` – Even faster, most cost-effective version. **Basic quality, low cost.**
-- `gpt-oss-120b` – Open source model with 120B parameters. **Variable quality, very low cost.**
-- `gpt-oss-20b` – Open source model with 20B parameters. **Basic quality, very low cost.**
+- `gpt-5.1` – That Y Combinator check just came in the mail. **Best quality, highest cost.**
+- `gpt-5-mini` – A couple family and friends wired you some money. **Good quality, moderate cost.**
+- `gpt-5-nano` – You're dirt poor. Give up. **Basic quality, low cost.**
+- `gpt-oss-120b` – Wtf are you doing. **Variable quality, very low cost.**
+- `gpt-oss-20b` – Wtf are you doing with emphasis. **Basic quality, very low cost.**
 
 #### Usage:
 ```bash
@@ -172,7 +176,7 @@ Results are cached separately per model, so you can experiment with quality vs. 
 <a id="configuration"></a>
 ### ⚙️ Configuration
 
-VibeScript can be configured via an optional `vibe.config.json` file.
+VibeScript can be configured via an optional `vibe.config.json` file so your root folder can look more complicated.
 
 #### Example `vibe.config.json`
 ```json
@@ -184,20 +188,6 @@ VibeScript can be configured via an optional `vibe.config.json` file.
 
 - `model` – Default OpenAI model to use for component generation. **Recommended: gpt-5.1 for best results.**
 - `port` – Port for the dev server in `--watch` mode.
-
-#### Priority:
-1. Command-line flags (highest priority)
-2. `vibe.config.json`
-3. Built-in defaults (`gpt-5-nano` for model, `3000` for port)
-
-#### Example:
-```bash
-# Uses model from config file
-vibe example/App.vibe --watch
-
-# Overrides config file
-vibe example/App.vibe --model gpt-5.1 --port 5000
-```
 
 <a id="supabase-support-beta"></a>
 ### 💽 Supabase Support **BETA**
@@ -217,7 +207,7 @@ The AI will automatically generate the connection code and CRUD operations. The 
 - `SUPABASE_ANON_KEY` - Your anon/publishable key (for frontend code)
 - `SUPABASE_SERVICE_ROLE_KEY` - Your service_role key (for backend/admin code, use "admin" or "backend" in the source description)
 
-Just vibe with your database. Don't think about SQL.
+No SQL needed. And if anyone mentions RLSs, just tell them you have them.
 
 <a id="linting-your-vibes"></a>
 ## 🔍 Linting Your Vibes
@@ -234,9 +224,6 @@ The linter checks for:
 - Unused components (why did you define it if you're not using it?)
 - Missing pages (you need at least one page to vibe)
 - Unused data sources (clean up your mess)
-
-Think of it as a vibe check for your code.
-
 
 <a id="license"></a>
 ## 📝 License
