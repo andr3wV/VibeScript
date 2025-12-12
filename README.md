@@ -31,6 +31,7 @@ component Navbar:
 - [🔍 Linting Your Vibes](#linting-your-vibes)
 - [📝 License](#license)
 
+<a id="why-use-vibescript"></a>
 ## 🏆 Why Use VibeScript?
 
 - You hate typing `div` tags.
@@ -39,6 +40,7 @@ component Navbar:
 - You're tired of "learning" frameworks when you could just be describing your UI in plain English like a normal human.
 - You want to use a cutting edge language that will help you raise millions of dollars.
 
+<a id="installation"></a>
 ## 📦 Installation
 
 ```bash
@@ -64,8 +66,10 @@ Create a `.env` file in your project root:
 echo "OPENAI_API_KEY=your_api_key_here" > .env
 ```
 
+<a id="usage"></a>
 ## 🛠 Usage
 
+<a id="create-a-vibe-file"></a>
 ### Create a `.vibe` file
 
 Check out the `example/App.vibe` file for a complete working example, or create your own:
@@ -87,6 +91,7 @@ page App:
 
 *Advanced users can also use `component` instead of `thing`*
 
+<a id="build-your-vibes"></a>
 ### Build Your Vibes
 
 ```bash
@@ -97,8 +102,10 @@ Outputs HTML to `dist/`. That's it. Your vibes are now a website. 🎉
 
 *VibeScript intelligently caches your prompts - change one component without regenerating everything else.*
 
+<a id="features"></a>
 ## ✨ Features
 
+<a id="nested-components"></a>
 ### 🧩 **Nested Components**
 
 VibeScript supports **recursive nesting**:
@@ -119,6 +126,7 @@ page App:
     Navbar
 ```
 
+<a id="hot-reload"></a>
 ### 🔥 **Hot Reload**
 
 Save your `.vibe` file and watch your browser update instantly. No refreshing. No thinking.
@@ -127,6 +135,7 @@ vibe example/App.vibe --watch
 ```
 
 
+<a id="deploy-to-vercel"></a>
 ### 🚢 **Deploy to Vercel**
 
 There's really only one way to host a website nowadays and that's with Vercel.
@@ -139,6 +148,7 @@ vibe example/App.vibe --deploy
 
 You'll instantly have a working website with a url!
 
+<a id="model-selection"></a>
 ### 🧠 **Model Selection**
 
 VibeScript lets you choose which OpenAI LLM to use for generating your vibes. Because sometimes you need GPT-5.1, and sometimes you just need a vibe.
@@ -159,6 +169,7 @@ vibe App.vibe --deploy --model gpt-5.1
 
 Results are cached separately per model, so you can experiment with quality vs. speed without losing your previous generations.
 
+<a id="configuration"></a>
 ### ⚙️ Configuration
 
 VibeScript can be configured via an optional `vibe.config.json` file.
@@ -188,6 +199,7 @@ vibe example/App.vibe --watch
 vibe example/App.vibe --model gpt-5.1 --port 5000
 ```
 
+<a id="supabase-support-beta"></a>
 ### 💽 Supabase Support **BETA**
 
 You might need a thing called a database, and the only real one is called Supabase:
@@ -207,6 +219,7 @@ The AI will automatically generate the connection code and CRUD operations. The 
 
 Just vibe with your database. Don't think about SQL.
 
+<a id="linting-your-vibes"></a>
 ## 🔍 Linting Your Vibes
 
 Check your vibes for violations:
@@ -225,6 +238,7 @@ The linter checks for:
 Think of it as a vibe check for your code.
 
 
+<a id="license"></a>
 ## 📝 License
 
 MIT - because gatekeeping is bad vibes.
