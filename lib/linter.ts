@@ -2,46 +2,46 @@
 import fs from "fs"; // This imports the file system module
 
 // This function lints a VibeScript file and returns issues
-export function lintVibeScript(file) { // This is the main linting function
+export function lintVibeScript(file: any): any { // This is the main linting function
   // Read the source file as UTF-8 text
-  const src = fs.readFileSync(file, "utf8"); // This reads the source file
+  const src: any = fs.readFileSync(file, "utf8"); // This reads the source file
   // Array to store all linting issues
-  const issues = []; // This initializes the issues array
+  const issues: any = []; // This initializes the issues array
   // Split source into lines for line number tracking
-  const lines = src.split("\n"); // This splits source into lines
+  const lines: any = src.split("\n"); // This splits source into lines
 
   // Parse things to check their descriptions
   // This regex matches thing/component declarations
-  const thingRegex = /(?:thing|component)\s+(\w+):\s*([\s\S]*?)(?=(?:thing|component|page|source)\s+\w+:|$)/g; // This is the regex for parsing things
-  let match; // This declares the match variable
+  const thingRegex: any = /(?:thing|component)\s+(\w+):\s*([\s\S]*?)(?=(?:thing|component|page|source)\s+\w+:|$)/g; // This is the regex for parsing things
+  let match: any; // This declares the match variable
   // Track all thing names for unused check
-  const thingNames = new Set(); // This creates a set to track thing names
+  const thingNames: any = new Set(); // This creates a set to track thing names
   // Track line numbers for things
-  const thingLines = {}; // This creates an object to track line numbers
+  const thingLines: any = {}; // This creates an object to track line numbers
 
   // Reset regex lastIndex
   thingRegex.lastIndex = 0; // This resets the regex position
   // Loop through all thing matches
   while ((match = thingRegex.exec(src))) { // This loops through thing matches
     // Extract thing name and body
-    const [, name, body] = match; // This destructures the regex match
+    const [, name, body]: any = match; // This destructures the regex match
     // Add to set of thing names
     thingNames.add(name); // This adds the name to the set
     // Find the line number where this thing starts
-    const beforeMatch = src.substring(0, match.index); // This gets text before the match
-    const lineNum = beforeMatch.split("\n").length; // This calculates the line number
+    const beforeMatch: any = src.substring(0, match.index); // This gets text before the match
+    const lineNum: any = beforeMatch.split("\n").length; // This calculates the line number
     // Store line number
     thingLines[name] = lineNum; // This stores the line number for the thing
 
     // Trim the body
-    const bodyText = body.trim(); // This trims whitespace from the body
+    const bodyText: any = body.trim(); // This trims whitespace from the body
     // Extract the prompt (first quoted string or first line)
-    let prompt = ""; // This initializes the prompt variable
+    let prompt: any = ""; // This initializes the prompt variable
     if (bodyText.startsWith('"') && bodyText.includes('"', 1)) { // This checks for quoted prompt
-      const firstQuoteEnd = bodyText.indexOf('"', 1); // This finds the end quote position
+      const firstQuoteEnd: any = bodyText.indexOf('"', 1); // This finds the end quote position
       prompt = bodyText.substring(1, firstQuoteEnd); // This extracts the quoted prompt
     } else { // This is the else for unquoted prompt
-      const firstLine = bodyText.split("\n")[0].trim(); // This gets the first line
+      const firstLine: any = bodyText.split("\n")[0].trim(); // This gets the first line
       prompt = firstLine.replace(/^["']|["']$/g, ''); // This cleans the prompt
     } // This is the end of the prompt extraction
     
@@ -57,7 +57,7 @@ export function lintVibeScript(file) { // This is the main linting function
     } // This is the end of the short prompt check
 
     // Check if prompt contains emojis
-    const emojiRegex = /[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/u; // This is the regex for detecting emojis
+    const emojiRegex: any = /[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/u; // This is the regex for detecting emojis
     if (!emojiRegex.test(prompt)) { // This checks if no emojis are found
       // Add a warning if no emojis found
       issues.push({ // This adds a warning to the issues array
@@ -69,9 +69,9 @@ export function lintVibeScript(file) { // This is the main linting function
     } // This is the end of the emoji check
     
     // Check if prompt is too generic
-    const genericWords = ["thing", "component", "stuff", "something", "element"]; // This is the list of generic words to avoid
-    const lowerPrompt = prompt.toLowerCase(); // This converts the prompt to lowercase
-    if (genericWords.some(word => lowerPrompt.includes(word))) { // This checks if any generic words are used
+    const genericWords: any = ["thing", "component", "stuff", "something", "element"]; // This is the list of generic words to avoid
+    const lowerPrompt: any = prompt.toLowerCase(); // This converts the prompt to lowercase
+    if (genericWords.some((word: any) => lowerPrompt.includes(word))) { // This checks if any generic words are used
       // Add a warning for generic descriptions
       issues.push({ // This adds a warning to the issues array
         type: "warning", // This sets the issue type
@@ -83,22 +83,22 @@ export function lintVibeScript(file) { // This is the main linting function
   } // This is the end of the thing parsing while loop
 
   // Parse pages to check their content
-  const pageRegex = /page\s+(\w+):([\s\S]*?)(?=page\s+\w+:|source\s+\w+\s+\w+:|(?:thing|component)\s+\w+:|$)/g; // This is the regex for parsing pages
-  const pageNames = new Set(); // This creates a set to track page names
+  const pageRegex: any = /page\s+(\w+):([\s\S]*?)(?=page\s+\w+:|source\s+\w+\s+\w+:|(?:thing|component)\s+\w+:|$)/g; // This is the regex for parsing pages
+  const pageNames: any = new Set(); // This creates a set to track page names
   // Reset regex lastIndex
   pageRegex.lastIndex = 0; // This resets the regex position
   // Loop through all page matches
   while ((match = pageRegex.exec(src))) {
     // Extract page name and body
-    const [, pageName, body] = match;
+    const [, pageName, body]: any = match;
     // Add to set of page names
     pageNames.add(pageName);
     // Find line number
-    const beforeMatch = src.substring(0, match.index);
-    const lineNum = beforeMatch.split("\n").length;
+    const beforeMatch: any = src.substring(0, match.index);
+    const lineNum: any = beforeMatch.split("\n").length;
     
     // Check if page body is empty or very short
-    const bodyText = body.trim();
+    const bodyText: any = body.trim();
     if (bodyText.length < 5) {
       // Add a warning for empty pages
       issues.push({
@@ -110,7 +110,7 @@ export function lintVibeScript(file) { // This is the main linting function
     }
     
     // Check if page references any things
-    const referencedThings = Array.from(thingNames).filter(name => bodyText.includes(name));
+    const referencedThings: any = Array.from(thingNames).filter((name: any) => bodyText.includes(name));
     if (referencedThings.length === 0 && !bodyText.match(/^["']/)) {
       // Add a warning if page doesn't reference any things
       issues.push({
@@ -124,15 +124,16 @@ export function lintVibeScript(file) { // This is the main linting function
 
   // Check for unused things (things that are never referenced)
   // Build a set of all referenced thing names
-  const referencedThings = new Set();
+  const referencedThings: any = new Set();
   // Check in page bodies
   pageRegex.lastIndex = 0;
   while ((match = pageRegex.exec(src))) {
-    const [, , body] = match;
+    const [, , body]: any = match;
     // Find all thing references in the body
     for (const thingName of thingNames) {
-      if (body.includes(thingName)) {
-        referencedThings.add(thingName);
+      const typedThingName: any = thingName as any;
+      if (body.includes(typedThingName)) {
+        referencedThings.add(typedThingName);
       }
     }
   }
@@ -140,24 +141,26 @@ export function lintVibeScript(file) { // This is the main linting function
   // Check in thing bodies (for nested things)
   thingRegex.lastIndex = 0;
   while ((match = thingRegex.exec(src))) {
-    const [, name, body] = match;
+    const [, name, body]: any = match;
     // Find all thing references in this thing's body
     for (const thingName of thingNames) {
-      if (thingName !== name && body.includes(thingName)) {
-        referencedThings.add(thingName);
+      const typedThingName: any = thingName as any;
+      if (typedThingName !== name && body.includes(typedThingName)) {
+        referencedThings.add(typedThingName);
       }
     }
   }
   
   // Check for unused things
   for (const thingName of thingNames) {
-    if (!referencedThings.has(thingName)) {
+    const typedThingName: any = thingName as any;
+    if (!referencedThings.has(typedThingName)) {
       // Add a warning for unused things
       issues.push({
         type: "warning",
-        message: `Thing "${thingName}" is defined but never used. Dead code vibes! 🪦`,
-        line: thingLines[thingName],
-        thing: thingName
+        message: `Thing "${typedThingName}" is defined but never used. Dead code vibes! 🪦`,
+        line: thingLines[typedThingName],
+        thing: typedThingName
       });
     }
   }
@@ -183,26 +186,26 @@ export function lintVibeScript(file) { // This is the main linting function
   }
 
   // Check for sources (Supabase)
-  const sourceRegex = /source\s+(\w+)\s+(\w+):/g;
-  const sources = [];
+  const sourceRegex: any = /source\s+(\w+)\s+(\w+):/g;
+  const sources: any = [];
   // Reset regex lastIndex
   sourceRegex.lastIndex = 0;
   // Loop through all source matches
   while ((match = sourceRegex.exec(src))) {
     // Extract source type and name
-    const [, type, name] = match;
+    const [, type, name]: any = match;
     // Add to sources array
     sources.push({ type, name });
   }
   
   // If sources exist, check if they're actually used
   if (sources.length > 0) {
-    const sourceNames = sources.map(s => s.name);
-    const sourceUsed = sourceNames.some(name => {
+    const sourceNames: any = sources.map((s: any) => s.name);
+    const sourceUsed: any = sourceNames.some((name: any) => {
       // Check if source name appears in any thing prompts
       thingRegex.lastIndex = 0;
       while ((match = thingRegex.exec(src))) {
-        const [, , body] = match;
+        const [, , body]: any = match;
         if (body.toLowerCase().includes(name.toLowerCase())) {
           return true;
         }
@@ -221,8 +224,8 @@ export function lintVibeScript(file) { // This is the main linting function
   }
 
   // Suggest model upgrade if file is large or complex
-  const lineCount = lines.length;
-  const thingCount = thingNames.size;
+  const lineCount: any = lines.length;
+  const thingCount: any = thingNames.size;
   if (lineCount > 100 || thingCount > 20) {
     // Add a suggestion for larger projects
     issues.push({
@@ -237,7 +240,7 @@ export function lintVibeScript(file) { // This is the main linting function
 }
 
 // This function prints linting results in a human-readable format
-export function printLintResults(issues, file) { // This is the lint results printing function
+export function printLintResults(issues: any, file: any): any { // This is the lint results printing function
   // If no issues, print success message
   if (issues.length === 0) { // This checks if there are no issues
     console.log("✨ Your vibes are perfect! No issues found."); // This prints the success message
@@ -245,9 +248,9 @@ export function printLintResults(issues, file) { // This is the lint results pri
   } // This is the end of the no issues check
 
   // Group issues by type
-  const errors = issues.filter(i => i.type === "error"); // This filters for error issues
-  const warnings = issues.filter(i => i.type === "warning"); // This filters for warning issues
-  const infos = issues.filter(i => i.type === "info"); // This filters for info issues
+  const errors: any = issues.filter((i: any) => i.type === "error"); // This filters for error issues
+  const warnings: any = issues.filter((i: any) => i.type === "warning"); // This filters for warning issues
+  const infos: any = issues.filter((i: any) => i.type === "info"); // This filters for info issues
 
   // Print summary
   console.log(`\n🔍 Vibe Linter Results for ${file}:`); // This prints the results header
@@ -257,7 +260,8 @@ export function printLintResults(issues, file) { // This is the lint results pri
   if (errors.length > 0) { // This checks if there are errors to print
     console.log("❌ Errors:"); // This prints the errors header
     for (const issue of errors) { // This loops through each error
-      console.log(`   Line ${issue.line}: ${issue.message}`); // This prints each error
+      const typedIssue: any = issue as any;
+      console.log(`   Line ${typedIssue.line}: ${typedIssue.message}`); // This prints each error
     } // This is the end of the errors loop
     console.log(); // This prints a blank line
   } // This is the end of the errors check
@@ -266,8 +270,9 @@ export function printLintResults(issues, file) { // This is the lint results pri
   if (warnings.length > 0) { // This checks if there are warnings to print
     console.log("⚠️  Warnings:"); // This prints the warnings header
     for (const issue of warnings) { // This loops through each warning
-      const location = issue.thing ? `Thing "${issue.thing}"` : issue.page ? `Page "${issue.page}"` : ""; // This creates location info
-      console.log(`   Line ${issue.line}${location ? ` (${location})` : ""}: ${issue.message}`); // This prints each warning
+      const typedIssue: any = issue as any;
+      const location: any = typedIssue.thing ? `Thing "${typedIssue.thing}"` : typedIssue.page ? `Page "${typedIssue.page}"` : ""; // This creates location info
+      console.log(`   Line ${typedIssue.line}${location ? ` (${location})` : ""}: ${typedIssue.message}`); // This prints each warning
     } // This is the end of the warnings loop
     console.log(); // This prints a blank line
   } // This is the end of the warnings check
@@ -276,7 +281,8 @@ export function printLintResults(issues, file) { // This is the lint results pri
   if (infos.length > 0) { // This checks if there are suggestions to print
     console.log("💡 Suggestions:"); // This prints the suggestions header
     for (const issue of infos) { // This loops through each suggestion
-      console.log(`   ${issue.message}`); // This prints each suggestion
+      const typedIssue: any = issue as any;
+      console.log(`   ${typedIssue.message}`); // This prints each suggestion
     } // This is the end of the suggestions loop
     console.log(); // This prints a blank line
   } // This is the end of the suggestions check

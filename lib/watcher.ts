@@ -14,16 +14,16 @@ import fs from "fs"; // This imports the file system module
 import ora from "ora"; // This imports the ora spinner library
 
 // This function watches a VibeScript file and rebuilds on changes
-export async function watchVibeScript(file, config = {}) { // This is the main watch function
+export async function watchVibeScript(file: any, config: any = {}): Promise<any> { // This is the main watch function
   // Print a message that we're starting to watch
   console.log("👀 Watching for changes with live reload..."); // This logs the start of watching
   // Print a message that we're building initially
   console.log("🔨 Building initial pages..."); // This logs the initial build start
 
   // Create a new Express application instance
-  const app = express(); // This creates the Express app instance
+  const app: any = express(); // This creates the Express app instance
   // Resolve the absolute path to the dist directory
-  const distPath = path.resolve("dist"); // This gets the absolute path to dist
+  const distPath: any = path.resolve("dist"); // This gets the absolute path to dist
 
   // Ensure 'dist' directory exists before serving static files or reading from it
   // Check if the dist directory exists
@@ -38,17 +38,17 @@ export async function watchVibeScript(file, config = {}) { // This is the main w
 
   // Handle the root path ("/") to serve a default HTML file
   // Define a route handler for GET requests to "/"
-  app.get("/", (req, res) => { // This sets up the root route handler
+  app.get("/", (req: any, res: any) => { // This sets up the root route handler
     // Get all HTML files in the dist directory
     // Read the directory contents
-    const htmlFiles = fs // This starts reading the directory
+    const htmlFiles: any = fs // This starts reading the directory
       // Read all files in the dist directory
       .readdirSync(distPath) // This reads the dist directory
       // Filter to only HTML files
-      .filter((f) => f.endsWith(".html")); // This filters for HTML files
+      .filter((f: any) => f.endsWith(".html")); // This filters for HTML files
 
     // Initialize target file variable
-    let targetFile = null; // This initializes the target file variable
+    let targetFile: any = null; // This initializes the target file variable
 
     // Prioritize 'index.html' if it exists
     // Check if index.html is in the list
@@ -78,18 +78,18 @@ export async function watchVibeScript(file, config = {}) { // This is the main w
   }); // This is the end of the route handler
 
   // Get the port number from config or use default
-  const port = Number(config.port || 3000); // This gets the port from config or defaults to 3000
+  const port: any = Number((config as any).port || 3000); // This gets the port from config or defaults to 3000
   // Declare variables for server and WebSocket server
-  let server; // This declares the HTTP server variable
-  let wss; // This declares the WebSocket server variable
+  let server: any; // This declares the HTTP server variable
+  let wss: any; // This declares the WebSocket server variable
 
   // WebSocket for reload events
   // This function broadcasts a message to all connected WebSocket clients
-  function broadcast(msg) {
+  function broadcast(msg: any): any {
     // Check if WebSocket server exists
     if (wss) {
       // Loop through all connected clients
-      wss.clients.forEach((client) => {
+      wss.clients.forEach((client: any) => {
         // Check if client connection is open (readyState 1 = OPEN)
         if (client.readyState === 1) {
           // Send the message to this client
@@ -101,9 +101,9 @@ export async function watchVibeScript(file, config = {}) { // This is the main w
 
   // Inject live reload script into HTML files
   // This function adds the live reload WebSocket script to all HTML files
-  function injectLiveReload() {
+  function injectLiveReload(): any {
     // Define the live reload script as a string
-    const script = `
+    const script: any = `
       <script id="vibe-live-reload">
         // Create a WebSocket connection to the current host
         const ws = new WebSocket("ws://" + location.host);
@@ -159,13 +159,13 @@ export async function watchVibeScript(file, config = {}) { // This is the main w
     `;
 
     // Loop through all files in the dist directory
-    fs.readdirSync(distPath).forEach((file) => {
+    fs.readdirSync(distPath).forEach((file: any) => {
       // Check if file is an HTML file
       if (file.endsWith(".html")) {
         // Build the full file path
-        const filePath = path.join(distPath, file);
+        const filePath: any = path.join(distPath, file);
         // Read the HTML file content
-        let html = fs.readFileSync(filePath, "utf8");
+        let html: any = fs.readFileSync(filePath, "utf8");
         // Only inject the script if it's not already present in the HTML
         // Check if the script ID is not already in the HTML
         if (!html.includes('id="vibe-live-reload"')) {
@@ -182,7 +182,7 @@ export async function watchVibeScript(file, config = {}) { // This is the main w
   // Wrap in try-catch to handle errors
   try {
     // Create a spinner for the initial build
-    const buildSpinner = ora("Building initial pages...").start(); // This creates and starts the build spinner
+    const buildSpinner: any = ora("Building initial pages...").start(); // This creates and starts the build spinner
     // Compile the VibeScript file with the given config
     await compileVibeScript(file, config);
     // Stop spinner with success
@@ -207,9 +207,9 @@ export async function watchVibeScript(file, config = {}) { // This is the main w
     // Broadcast "done" message to remove any building overlay
     broadcast("done");
     
-  } catch (error) {
+  } catch (error: any) {
     // If build fails, print error and exit
-    console.error("❌ Build failed:", error.message);
+    console.error("❌ Build failed:", (error as any).message);
     // Exit with error code 1
     process.exit(1);
   }
@@ -218,7 +218,7 @@ export async function watchVibeScript(file, config = {}) { // This is the main w
   // Use chokidar to watch the VibeScript file for changes
   chokidar.watch(file).on("change", async () => {
     // Create a spinner for the rebuild
-    const rebuildSpinner = ora("File changed, rebuilding...").start(); // This creates and starts the rebuild spinner
+    const rebuildSpinner: any = ora("File changed, rebuilding...").start(); // This creates and starts the rebuild spinner
     // Broadcast "building" message to show overlay
     broadcast("building");
     // Wrap in try-catch to handle rebuild errors
@@ -233,9 +233,9 @@ export async function watchVibeScript(file, config = {}) { // This is the main w
       broadcast("done");
       // Broadcast "reload" to trigger page reload
       broadcast("reload");
-    } catch (error) {
+    } catch (error: any) {
       // Stop spinner with error
-      rebuildSpinner.fail(`Rebuild failed: ${error.message}`); // This stops the spinner with error
+      rebuildSpinner.fail(`Rebuild failed: ${(error as any).message}`); // This stops the spinner with error
       // Remove building overlay even on failure
       broadcast("done");
     }

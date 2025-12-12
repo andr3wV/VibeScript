@@ -1,17 +1,19 @@
 {
   "name": "vibescript",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "The ultimate prompt-driven, component-based, AI-powered, vibe-oriented programming language.",
   "type": "module",
-  "main": "bin/vibe.js",
+  "main": "build/bin/vibe.js",
   "bin": {
-    "vibe": "./bin/vibe.js",
-    "vibescript": "./bin/vibe.js"
+    "vibe": "build/bin/vibe.js",
+    "vibescript": "build/bin/vibe.js"
   },
   "directories": {
     "lib": "lib"
   },
   "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -44,5 +46,9 @@
     "ora": "^9.0.0",
     "vercel": "^32.0.0",
     "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.9",
+    "typescript": "^5.6.3"
   }
 }

@@ -2,45 +2,42 @@
 
 > **Code is dead. Vibes are forever.** 
 
-VibeScript is the **world’s first prompt-driven, component-based, full-stack, AI-powered, vibe-oriented programming language**.
+Look, coding is obviously dead. Everyone knows that. Why would you learn TypeScript when you can just describe what you want in plain English? Why memorize React hooks when AI can generate them for you? Why understand databases when you can just vibe with Supabase? 
 
-You don’t write code. You write *vibes*.  
-VibeScript compiles your vibes into production-ready HTML/CSS/JS using an LLM, caches the results, and serves them like a normal website.  
+VibeScript is the **world's first prompt-driven, component-based, full-stack, AI-powered, blockchain-integrated, vibe-oriented programming language**.
 
-It's like React, but instead of JSX, you just say:
+You don't write code. You write *vibes*.  
+VibeScript compiles your vibes into a production-ready app using our proprietary AI.  It's like React, but instead of JSX, you just say:
 
 ```
 component Navbar:
     "A minimalistic navbar with a logo on the left and a glowing 'Sign Up' button on the right."
 ```
 
-(You can use either `component` or `thing` - whatever feels more natural to you.)
+## 📋 Table of Contents
 
----
-
-## ✨ Features
-
-- **🧠 AI-Driven Compilation** – Your code is literally just English prompts. The AI does the rest.
-- **📦 Component-Based** – Break your vibes into reusable components (use `component` or `thing` - whatever you prefer).
-- **🔄 Recursive Nesting** – Components can contain other components, infinitely deep.
-- **⚡ Hot Reload** – Save your `.vibe` file, and your browser updates instantly.
-- **🎭 Build Overlay** – Shows a “✨ Building vibes…” overlay while the AI thinks.
-- **🚀 One-Command Deploy** – Deploy to Vercel with `--deploy`.
-- **🛡️ Prompt Caching** – Change one component without regenerating the whole site.
-- **🧘 Zero Learning Curve** – If you can describe it, you can ship it.
-- **🧠 Model Selection** – Choose your OpenAI LLM for generation.
-- **⚙️ Config File Support** – Set defaults in `vibe.config.json`.
-
----
+- [🏆 Why Use VibeScript?](#why-use-vibescript)
+- [📦 Installation](#installation)
+- [🛠 Usage](#usage)
+  - [Create a `.vibe` file](#create-a-vibe-file)
+  - [Build Your Vibes](#build-your-vibes)
+- [✨ Features](#features)
+  - [🧩 Nested Components](#nested-components)
+  - [🔥 Hot Reload](#hot-reload)
+  - [🚢 Deploy to Vercel](#deploy-to-vercel)
+  - [🧠 Model Selection](#model-selection)
+  - [⚙️ Configuration](#configuration)
+  - [💽 Supabase Support **BETA**](#supabase-support-beta)
+- [🔍 Linting Your Vibes](#linting-your-vibes)
+- [📝 License](#license)
 
 ## 🏆 Why Use VibeScript?
 
 - You hate typing `div` tags.
-- You believe “design is just vibes”.
-- You want to feel like a **10x developer** without actually learning anything.
+- You want to be a **10x developer** without actually learning anything.
 - You want to deploy a site in 5 minutes and spend the rest of the day tweeting about it.
-
----
+- You're tired of "learning" frameworks when you could just be describing your UI in plain English like a normal human.
+- You want to use a cutting edge language that will help you raise millions of dollars.
 
 ## 📦 Installation
 
@@ -54,7 +51,7 @@ sudo npm install -g vibescript
 ```
 
 
-You’ll also need an **OpenAI API key**. You can set it in two ways:
+You'll also need an **OpenAI API key**. You can set it in two ways:
 
 **Option 1: Environment Variable**
 ```bash
@@ -67,8 +64,6 @@ Create a `.env` file in your project root:
 echo "OPENAI_API_KEY=your_api_key_here" > .env
 ```
 
----
-
 ## 🛠 Usage
 
 ### Create a `.vibe` file
@@ -76,13 +71,13 @@ echo "OPENAI_API_KEY=your_api_key_here" > .env
 Check out the `example/App.vibe` file for a complete working example, or create your own:
 
 ```vibescript
-component NavButton:
-    "A glowing button that says 'Sign Up' in TailwindCSS."
+thing NavButton:
+    "A glowing button that says 'Sign Up' in upper case letters."
 
-component Navbar:
+thing Navbar:
     "A minimalistic navbar with a logo on the left and the NavButton on the right."
 
-component HeroSection:
+thing HeroSection:
     "Big bold headline saying 'Welcome to the Vibe'. Background is a gradient from pink to purple. Add a call-to-action button."
 
 page App:
@@ -90,70 +85,33 @@ page App:
     HeroSection
 ```
 
----
+*Advanced users can also use `component` instead of `thing`*
 
-### Build Once
+### Build Your Vibes
 
 ```bash
-# Build the example app
 vibe example/App.vibe
-
-# Or build your own file
-vibe MyApp.vibe
 ```
 
-Outputs HTML to `dist/`.
+Outputs HTML to `dist/`. That's it. Your vibes are now a website. 🎉
 
----
+*VibeScript intelligently caches your prompts - change one component without regenerating everything else.*
 
-### Hot Reload (Dev Mode)
+## ✨ Features
 
-```bash
-# Start dev server with the example app
-vibe example/App.vibe --watch
+### 🧩 **Nested Components**
 
-# Or with your own file
-vibe MyApp.vibe --watch
-```
-
-- Starts a dev server at `http://localhost:3000`
-- Injects a live reload script into your HTML
-- Shows a **"✨ Building vibes..."** overlay while the AI generates
-- Reloads automatically when done
-
----
-
-### Deploy to Vercel
-
-```bash
-# Deploy the example app
-vibe example/App.vibe --deploy
-
-# Or deploy your own
-vibe MyApp.vibe --deploy
-```
-
-This will:
-1. Build your vibes
-2. Deploy `dist/` to Vercel
-3. Make you feel like a 10x developer
-
----
-
-## 🧩 Nested Components
-
-VibeScript supports **recursive nesting**.  
-Example:
+VibeScript supports **recursive nesting**:
 
 ```vibescript
-component Icon:
+thing Icon:
     "A small SVG star icon."
 
-component NavButton:
+thing NavButton:
     "A glowing button that says 'Sign Up'"
     Icon
 
-component Navbar:
+thing Navbar:
     "A minimalistic navbar with a logo on the left and NavButton on the right."
     NavButton
 
@@ -161,54 +119,51 @@ page App:
     Navbar
 ```
 
-The compiler will:
-- Generate `Icon`
-- Inject it into `NavButton`
-- Inject `NavButton` into `Navbar`
-- Inject `Navbar` into your page (which becomes `index.html` if named `App`)
-- Ship it
+### 🔥 **Hot Reload**
 
-(You can mix `component` and `thing` keywords freely - the compiler understands both!)
+Save your `.vibe` file and watch your browser update instantly. No refreshing. No thinking.
+```bash
+vibe example/App.vibe --watch
+```
 
----
 
-## 🧠 Choosing Your OpenAI Model
+### 🚢 **Deploy to Vercel**
 
-VibeScript lets you choose which OpenAI LLM to use for generating your vibes. 
+There's really only one way to host a website nowadays and that's with Vercel.
 
-### Available Models:
+```bash
+vercel login # Login to Vercel first
+
+vibe example/App.vibe --deploy 
+```
+
+You'll instantly have a working website with a url!
+
+### 🧠 **Model Selection**
+
+VibeScript lets you choose which OpenAI LLM to use for generating your vibes. Because sometimes you need GPT-5.1, and sometimes you just need a vibe.
+
+#### Available Models:
 - `gpt-5.1` – Latest and most capable model for complex generation and the best UI. **Best quality, highest cost.**
 - `gpt-5-mini` – Faster, more cost-effective version of GPT-5.1. **Good quality, moderate cost.**
 - `gpt-5-nano` – Even faster, most cost-effective version. **Basic quality, low cost.**
 - `gpt-oss-120b` – Open source model with 120B parameters. **Variable quality, very low cost.**
 - `gpt-oss-20b` – Open source model with 20B parameters. **Basic quality, very low cost.**
 
-### Model Selection Guide:
-- **Production/Professional Sites**: Use `gpt-5.1`
-- **Personal Projects/Prototypes**: Use `gpt-5-mini` or `gpt-5-nano`
-- **Budget-Conscious Development**: Use `gpt-5-nano`
-- **Experimental/Open Source**: Use `gpt-oss-120b` or `gpt-oss-20b`
-
-### Example:
+#### Usage:
 ```bash
 vibe App.vibe --model gpt-5.1
+vibe App.vibe --watch --model gpt-5-mini
+vibe App.vibe --deploy --model gpt-5.1
 ```
 
-This will:
-- Use `gpt-5.1` for all component generation
-- Produce higher quality, more polished websites
-- Cache results separately per model (so switching models won't overwrite previous cache)
-- Allow you to experiment with speed vs. quality trade-offs
+Results are cached separately per model, so you can experiment with quality vs. speed without losing your previous generations.
 
----
+### ⚙️ Configuration
 
-## ⚙️ Configuration
+VibeScript can be configured via an optional `vibe.config.json` file.
 
-VibeScript can be configured via:
-1. **Command-line flags** (e.g., `--model gpt-4o`)
-2. **Optional config file** (`vibe.config.json`)
-
-### Example `vibe.config.json`
+#### Example `vibe.config.json`
 ```json
 {
   "model": "gpt-5.1",
@@ -219,38 +174,23 @@ VibeScript can be configured via:
 - `model` – Default OpenAI model to use for component generation. **Recommended: gpt-5.1 for best results.**
 - `port` – Port for the dev server in `--watch` mode.
 
-### Priority:
+#### Priority:
 1. Command-line flags (highest priority)
 2. `vibe.config.json`
 3. Built-in defaults (`gpt-5-nano` for model, `3000` for port)
 
-### Example Usage:
+#### Example:
 ```bash
 # Uses model from config file
 vibe example/App.vibe --watch
 
-# Overrides config file with higher quality model
+# Overrides config file
 vibe example/App.vibe --model gpt-5.1 --port 5000
-
-# Quick test with budget model
-vibe example/App.vibe --model gpt-5-nano
 ```
 
----
+### 💽 Supabase Support **BETA**
 
-## ⚙️ How It Works
-
-1. **Prompt Parsing** – VibeScript reads your `.vibe` file and extracts components, pages, and data sources.
-2. **Hashing & Caching** – Each prompt is hashed. If unchanged, it's pulled from `.vibecache.json`.
-3. **AI Compilation** – Prompts are sent to an LLM (e.g., GPT-4o-mini) to generate HTML/CSS/JS.
-4. **Recursive Resolution** – If a component references another, it's resolved first based on explicit nesting.
-5. **Assembly** – Components are stitched together into full HTML pages.
-6. **Live Reload** – A WebSocket server pushes reload events to your browser.
-7. **Deployment** – `--deploy` sends your vibes to Vercel.
-
-## 🔥 Data Sources (Supabase) **BETA**
-
-VibeScript supports Supabase! Just declare a source:
+You might need a thing called a database, and the only real one is called Supabase:
 
 ```vibescript
 source Supabase myDb:
@@ -265,7 +205,7 @@ The AI will automatically generate the connection code and CRUD operations. The 
 - `SUPABASE_ANON_KEY` - Your anon/publishable key (for frontend code)
 - `SUPABASE_SERVICE_ROLE_KEY` - Your service_role key (for backend/admin code, use "admin" or "backend" in the source description)
 
-Real vibe coders use databases for everything! 🔥
+Just vibe with your database. Don't think about SQL.
 
 ## 🔍 Linting Your Vibes
 
@@ -276,16 +216,17 @@ vibe lint App.vibe
 ```
 
 The linter checks for:
-- Short or generic descriptions
+- Short or generic descriptions (be specific with your vibes!)
 - Missing emojis (real vibe coders use emojis!)
-- Unused components
-- Missing pages
-- Unused data sources
+- Unused components (why did you define it if you're not using it?)
+- Missing pages (you need at least one page to vibe)
+- Unused data sources (clean up your mess)
 
----
+Think of it as a vibe check for your code.
 
-## 🛡 Requirements
 
-- Node.js 18+
-- An OpenAI API key
-- A willingness to let AI decide your design choices
+## 📝 License
+
+MIT - because gatekeeping is bad vibes.
+
+**Built with vibes. Shipped with confidence. Debugged with denial.** 🌊

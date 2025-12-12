@@ -23,18 +23,18 @@ import { lintVibeScript, printLintResults } from "../lib/linter.js";
 import dotenv from "dotenv";
 
 // This function loads the config file if it exists
-function loadConfig() {
+function loadConfig(): any {
   // Resolve the path to vibe.config.json in the current directory
-  const configPath = path.resolve("vibe.config.json");
+  const configPath: any = path.resolve("vibe.config.json");
   // Check if the config file exists
   if (fs.existsSync(configPath)) {
     // Try to read and parse the config file
     try {
       // Read the file as UTF-8 and parse as JSON
       return JSON.parse(fs.readFileSync(configPath, "utf8"));
-    } catch (err) {
+    } catch (err: any) {
       // If parsing fails, log an error
-      console.error("❌ Failed to parse vibe.config.json:", err.message);
+      console.error("❌ Failed to parse vibe.config.json:", (err as any).message);
     }
   }
   // Return empty object if no config file exists
@@ -42,15 +42,15 @@ function loadConfig() {
 }
 
 // This function prints the configuration to the console
-function printConfig(config) {
+function printConfig(config: any): any {
   // Print a cyan bold header
   console.log(chalk.cyan.bold("\n🚀 VibeScript Configuration"));
   // Print a cyan separator line
   console.log(chalk.cyan("───────────────────────────"));
   // Print the model setting
-  console.log(`${chalk.bold("Model:")} ${config.model}`);
+  console.log(`${chalk.bold("Model:")} ${(config as any).model}`);
   // Print the port setting
-  console.log(`${chalk.bold("Port:")} ${config.port}`);
+  console.log(`${chalk.bold("Port:")} ${(config as any).port}`);
   // Print that cache is enabled
   console.log(`${chalk.bold("Cache:")} Enabled`);
   // Print a blank line
@@ -58,7 +58,7 @@ function printConfig(config) {
 }
 
 // This function checks if the OpenAI API key is set
-function checkApiKey() { // This is the API key check function
+function checkApiKey(): any { // This is the API key check function
   // Check if the environment variable is missing or empty
   if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY.trim() === "") { // This checks for missing API key
     // Try to load from .env file
@@ -88,9 +88,9 @@ function checkApiKey() { // This is the API key check function
 } // This is the end of the checkApiKey function
 
 // Create a new Commander program instance
-const program = new Command();
+const program: any = new Command();
 // Load the config file
-const fileConfig = loadConfig();
+const fileConfig: any = loadConfig();
 
 // Set up the main program command
 program
@@ -99,7 +99,7 @@ program
   // Set the description
   .description("Compile and run VibeScript projects")
   // Set the version number
-  .version("1.3.2");
+  .version("2.1.0");
 
 // Add a lint subcommand
 program
@@ -110,7 +110,7 @@ program
   // Add a required file argument
   .argument("<file>", "VibeScript file to lint")
   // Define the action to run when lint command is executed
-  .action((file) => { // This is the lint command action handler
+  .action((file: any) => { // This is the lint command action handler
     // Check if the file exists
     if (!fs.existsSync(file)) { // This checks if the input file exists
       // Print error if file doesn't exist
@@ -119,9 +119,9 @@ program
       process.exit(1); // This exits with error code 1
     } // This is the end of the file existence check
     // Run the linter on the file
-    const issues = lintVibeScript(file); // This runs the linting function
+    const issues: any = lintVibeScript(file); // This runs the linting function
     // Print the results
-    const exitCode = printLintResults(issues, file); // This prints the lint results
+    const exitCode: any = printLintResults(issues, file); // This prints the lint results
     // Exit with the appropriate code
     process.exit(exitCode); // This exits with the lint exit code
   }); // This is the end of the lint command action
@@ -138,63 +138,63 @@ program
   .option(
     "-m, --model <model>",
     "Choose OpenAI model (gpt-5.1, gpt-5-mini, gpt-5-nano, gpt-oss-120b, gpt-oss-20b, etc)",
-    fileConfig.model || "gpt-5-nano"
+    (fileConfig as any).model || "gpt-5-nano"
   )
   // Add port option with default from config
   .option(
     "-p, --port <port>",
     "Port for dev server",
-    fileConfig.port || 3000
+    (fileConfig as any).port || 3000
   )
   // Define the action to run when the main command is executed
-  .action(async (file, options) => {
+  .action(async (file: any, options: any) => {
     // Check API key before doing anything
     checkApiKey();
 
     // Build the config object from options
-    const config = {
+    const config: any = {
       // Use the model from options
-      model: options.model,
+      model: (options as any).model,
       // Use the port from options
-      port: options.port,
+      port: (options as any).port,
     };
 
     // Print the configuration
     printConfig(config);
 
     // Check if watch mode is enabled
-    if (options.watch) {
+    if ((options as any).watch) {
       // Print a message about starting dev mode
       console.log(chalk.blue("🔄 Starting development mode..."));
       // Start watching the file
       await watchVibeScript(file, config);
     } else {
       // Create a main spinner for the build process
-      const buildSpinner = ora("Building your vibes...").start(); // This creates and starts the build spinner
+      const buildSpinner: any = ora("Building your vibes...").start(); // This creates and starts the build spinner
       try { // This starts a try block for error handling
         // Compile the file
         await compileVibeScript(file, config);
         // Stop spinner with success
         buildSpinner.succeed("Build complete! Check the 'dist' folder for your generated files."); // This stops the spinner with success
         // Check if deploy flag is set
-        if (options.deploy) { // This checks if deploy flag is set
+        if ((options as any).deploy) { // This checks if deploy flag is set
           // Create a spinner for deployment
-          const deploySpinner = ora("Deploying to Vercel...").start(); // This creates and starts the deploy spinner
+          const deploySpinner: any = ora("Deploying to Vercel...").start(); // This creates and starts the deploy spinner
           try { // This starts a try block for deployment
             // Deploy to Vercel
             await deployToVercel(); // This deploys to Vercel
             // Stop spinner with success
             deploySpinner.succeed("Deployed to Vercel successfully!"); // This stops the spinner with success
-          } catch (error) { // This catches deployment errors
+          } catch (error: any) { // This catches deployment errors
             // Stop spinner with error
-            deploySpinner.fail(`Deployment failed: ${error.message}`); // This stops the spinner with error
+            deploySpinner.fail(`Deployment failed: ${(error as any).message}`); // This stops the spinner with error
             // Exit with error code
             process.exit(1); // This exits with error code
           } // This is the end of deployment try-catch block
         } // This is the end of deploy flag check
-      } catch (error) { // This catches build errors
+      } catch (error: any) { // This catches build errors
         // Stop spinner with error
-        buildSpinner.fail(`Build failed: ${error.message}`); // This stops the spinner with error
+        buildSpinner.fail(`Build failed: ${(error as any).message}`); // This stops the spinner with error
         // Exit with error code
         process.exit(1); // This exits with error code
       } // This is the end of build try-catch block
