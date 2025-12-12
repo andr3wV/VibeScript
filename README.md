@@ -1,12 +1,11 @@
 # 🌊 VibeScript
 
-> **Code is dead. Vibes are forever.** 
-
 Look, coding is obviously dead. Everyone knows that. Why would you learn TypeScript when you can just describe what you want in plain English? Why memorize React hooks when AI can generate them for you? Why understand databases when you can just vibe with Supabase? 
 
 VibeScript is the **world's first prompt-driven, component-based, full-stack, AI-powered, blockchain-integrated, vibe-oriented programming language**.
 
 You don't write code. You write *vibes*.  
+
 VibeScript compiles your vibes into a production-ready app using our proprietary AI.  It's like React, but instead of JSX, you just say:
 
 ```
@@ -55,13 +54,15 @@ sudo npm install -g vibescript
 
 You'll also need an [**OpenAI API key**](https://platform.openai.com/api-keys). You can set it in two ways:
 
-**Option 1: .env File** (Recommended)
+**Option 1: .env File** (Recommended but complex)
+
 Create a `.env` file in your project root:
 ```bash
 echo "OPENAI_API_KEY=your_api_key_here" > .env
 ```
 
 **Option 2: Inline in `.vibe` file**
+
 Just put it directly in your `.vibe` file at the top. This leaks your keys but fuck it, you don't care:
 ```vibescript
 apiKey: "sk-your-actual-api-key-here"
