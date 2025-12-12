@@ -99,7 +99,7 @@ program
   // Set the description
   .description("Compile and run VibeScript projects")
   // Set the version number
-  .version("2.1.0");
+  .version("2.1.1");
 
 // Add a lint subcommand
 program
